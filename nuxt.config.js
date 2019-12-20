@@ -51,6 +51,9 @@ module.exports = {
     }
   },
   plugins: [
-    { src: '@/plugins/element-ui', mode: 'client' }
+    { src: '@/plugins/globals'}
+  ],
+  css:[
+    '@/themes/mainTheme'
   ]
 }
