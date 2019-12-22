@@ -11,9 +11,11 @@
 <script>
 import navMenu from '~/components/main/navMenu'
 export default {
-  components: {navMenu}
+  components: {navMenu},
+   pageTransition: 'page'
 }
 </script>
 <style>
+
 </style>
 
