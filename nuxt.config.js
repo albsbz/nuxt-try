@@ -19,10 +19,7 @@ module.exports = {
     '@nuxtjs/axios',
     
     // Simple usage
-    'nuxt-express-module',
-
-    // With options
-    ['nuxt-express-module', { /* module options */ }],
+    'nuxt-express-module'
   ],
 
   axios: {
