@@ -17,9 +17,9 @@ module.exports = {
   },
   modules: [
     '@nuxtjs/axios',
-    
-    // Simple usage
-    'nuxt-express-module'
+  ],
+  serverMiddleware: [
+    '~/api/app.js',
   ],
 
   axios: {
