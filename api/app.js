@@ -6,10 +6,14 @@ const passportStrategy=require('./middleware/passport-strategy')
 
 const authRoutes=require('./routes/auth.routes')
 const postRoutes=require('./routes/post.routes')
+const commentRoutes=require('./routes/comment.routes')
 const keys = require('./keys')
 const app = express()
-
-mongoose.connect(keys.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
+mongoose.set('useUnifiedTopology', true);
+mongoose.connect(keys.MONGO_URI)
   .then(() => console.log('MongoDB connected...'))
   .catch(error => console.error(error))
 
@@ -20,5 +24,6 @@ app.use(bodyParser.json())
 
 app.use('/api/auth', authRoutes)
 app.use('/api/post', postRoutes)
+app.use('/api/comment', commentRoutes)
 
 module.exports = app

@@ -1,6 +1,7 @@
 const passport=require('passport')
 const {Router}=require('express')
 const router=Router()
+const upload=require('../middleware/upload')
 const ctr=require('../controllers/post.controller')
 
 // // /api/post
@@ -8,6 +9,7 @@ const ctr=require('../controllers/post.controller')
 router.post(
     '/admin/',
     passport.authenticate('jwt', {session:false}),
+    upload.single('image'),
     ctr.create
 )
 router.get(
