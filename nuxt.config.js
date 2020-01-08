@@ -48,7 +48,8 @@ module.exports = {
     }
   },
   plugins: [
-    { src: '@/plugins/globals'}
+    { src: '@/plugins/globals'},
+    { src: '@/plugins/axios'}
   ],
   css:[
     '@/themes/mainTheme'

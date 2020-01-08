@@ -9,10 +9,12 @@ const postRoutes=require('./routes/post.routes')
 const commentRoutes=require('./routes/comment.routes')
 const keys = require('./keys')
 const app = express()
+
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 mongoose.set('useUnifiedTopology', true);
+
 mongoose.connect(keys.MONGO_URI)
   .then(() => console.log('MongoDB connected...'))
   .catch(error => console.error(error))

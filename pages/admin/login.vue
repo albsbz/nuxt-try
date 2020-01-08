@@ -47,6 +47,8 @@ export default {
             this.$message.info('Войдите в систему')
         } else if (message==='logout'){
             this.$message.info('Вы вышли из профиля')
+        } else if (message==='session'){
+            this.$message.warning('Время сессии истекло, зайдите заново')
         }
     },
     methods: {
