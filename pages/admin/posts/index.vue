@@ -75,9 +75,7 @@
           await this.$store.dispatch('post/delete', _id)
           
           this.posts=this.posts.filter(p=>p._id!==_id)
-          debugger
           this.$message.success('пост удален')
-           debugger
         } catch (e){
             
         }

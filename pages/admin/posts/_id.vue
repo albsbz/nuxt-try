@@ -8,7 +8,7 @@
     <el-form :model="controls" :rules="rules" ref="form" @submit.native.prevent="onSubmit">
     <!-- <h2>Войти в профиль</h2> -->
         <el-form-item label="Текст" prop="text">
-            <el-input type="textarea" v-model.trim="controls.text" resize="none" 
+            <el-input type="textarea" v-model="controls.text" resize="none" 
             :rows="10"/>
         </el-form-item>
         <div class="mb">
