@@ -2,31 +2,29 @@
     <article class="post">
         <header class="post-header">
             <div class="post-title">
-                <h1>Post title</h1>
+                <h1>{{post.title}}</h1>
                 <nuxt-link :to="'/'||$router.push('/')"> 
                     <i class="el-icon-back"></i>
                 </nuxt-link>   
             </div>
             <div class="post-info">
-                <small class="el-icon-time">{{new Date().toLocaleString()}}</small>
-                <small class="el-icon-view">10</small>
+                <small class="el-icon-time">{{new Date(post.date).toLocaleString()}}</small>
+                <small class="el-icon-view">{{post.views}}</small>
             </div>
             <div class="post-img">
-                <img src="https://i.pinimg.com/736x/18/cc/dd/18ccdd8461473aac27dd0c64b925bf81.jpg" 
+                <img :src="post.imageUrl" 
                 alt="post-image">
             </div>
         </header>
         <main class="post-main">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque, maxime!</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque, maxime!</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque, maxime!</p>
+            <vue-markdown>{{post.text}}</vue-markdown>
         </main>
         <footer class="post-footer">
-            <app-comment-form v-if="canAddComment" @created="createCommentHandler"/>
-            <div class="comments" v-if="true">
-                <app-comment v-for="comment in 4" :comment="comment" :key="comment" />
+            <app-comment-form v-if="canAddComment" @created="createCommentHandler" :postId="post._id"/>
+            <div class="comments" v-if="post.comments.length">
+                <app-comment v-for="comment in post.comments" :comment="comment" :key="comment._id" />
             </div>
-            <div class="comments" v-if="false">
+            <div class="comments" v-else>
                 <p>Комментариев нет</p>
             </div>
         </footer>
@@ -48,13 +46,18 @@
                 canAddComment: true
             }
         },
+        async asyncData({store, params}) {
+            const post = await store.dispatch('post/fetchById', params.id)
+            await store.dispatch('post/addView', post)
+            return {post}
+        },
         components:{
             appComment,
             appCommentForm
         },
         methods:{
-            createCommentHandler(){
-                
+            createCommentHandler({newComment}){
+                this.post.comments.unshift(newComment)
                 this.canAddComment=false
             }
         }

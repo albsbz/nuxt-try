@@ -18,6 +18,11 @@ router.get(
     ctr.getAll
 )
 router.get(
+    '/admin/get/analytics',
+    passport.authenticate('jwt', {session:false}),
+    ctr.getAnalytics
+)
+router.get(
     '/admin/:id',
     passport.authenticate('jwt', {session:false}),
     ctr.getById
@@ -42,7 +47,7 @@ router.get(
     ctr.getById
 )
 router.put(
-    '/:id',
+    '/add/view/:id',
     ctr.addView
 )
 

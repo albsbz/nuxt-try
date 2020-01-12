@@ -2,7 +2,7 @@
 <div>
   <el-row type="flex" justify="center">
       <el-col :xs="24" :sm="18" :md="12" :lg="10" >
-        <app-post  v-for="post in posts" :key="post.id" :post="post">
+        <app-post  v-for="post in posts" :key="post._id" :post="post">
         </app-post>
       </el-col>
   </el-row>
@@ -21,14 +21,10 @@
    components:{
      AppPost
    },
-   data(){
-     return {
-        posts:[
-         {'id':1, 'title': 'first'},
-         {'id':2, 'title': 'second'}
-       ]
-     }   
-   }
+  async asyncData({store}) {
+    const posts = await store.dispatch('post/fetch')
+    return {posts}
+  },
 
   }
 </script>
