@@ -33,6 +33,9 @@
     "vue-chartjs": "^3.5.0",
     "vue-markdown": "^2.2.4"
   },
+  "engines": {
+    "node":"8.x"
+  },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
     "eslint": "^4.19.1",
