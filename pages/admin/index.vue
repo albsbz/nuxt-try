@@ -17,6 +17,11 @@
 <script>
 import appGraph from '~/components/admin/Graph'
 export default {
+    head() {
+        return {
+            'title':`${process.env.appName} | Аналитика`
+        }
+    },
     layout:'admin',
     middleware: ['admin-auth'],
     components: {appGraph},

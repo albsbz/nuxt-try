@@ -2,7 +2,7 @@
     <el-card class="comment">
         <div class="comment-header">
             <span class="person-name">{{comment.name}}</span>
-            <span><small class="el-icon-time">{{new Date(comment.date).toLocaleString()}}</small></span>
+            <span><small class="el-icon-time">{{comment.date|date}}</small></span>
         </div>
         <small class="comment-text">{{comment.text}}</small>
     </el-card>

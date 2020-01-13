@@ -12,12 +12,21 @@ module.exports = {
       { hid: 'description', name: 'description', content: 'Nuxt.js project' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/icon.png' }
     ]
   },
   modules: [
     '@nuxtjs/axios',
+    '@nuxtjs/pwa'
   ],
+  pwa: {
+    workbox: {
+      /* workbox options */
+    },
+    meta: {
+      /* meta options */
+    }
+  },
   serverMiddleware: [
     '~/api/app.js',
   ],
@@ -51,6 +60,9 @@ module.exports = {
     { src: '@/plugins/globals'},
     { src: '@/plugins/axios'}
   ],
+  env:{
+    appName: 'BLOG'
+  },
   css:[
     '@/themes/mainTheme'
   ]

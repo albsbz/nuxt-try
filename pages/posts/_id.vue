@@ -8,12 +8,12 @@
                 </nuxt-link>   
             </div>
             <div class="post-info">
-                <small class="el-icon-time">{{new Date(post.date).toLocaleString()}}</small>
+                <small class="el-icon-time">{{post.date|date}}</small>
                 <small class="el-icon-view">{{post.views}}</small>
             </div>
-            <div class="post-img">
+            <div>
                 <img :src="post.imageUrl" 
-                alt="post-image">
+                alt="post-image" class="post-img">
             </div>
         </header>
         <main class="post-main">
@@ -36,6 +36,11 @@
     import appComment from '~/components/main/comment'
     import appCommentForm from '~/components/main/commentForm'
     export default {
+        head() {
+            return {
+                'title':`${process.env.appName} | ${this.post.title}`
+            }
+        },
         async validate ({params}){
             if (params.id){return true}
             else throw new Error('Under Construction!')
@@ -43,7 +48,8 @@
         data(){
             return {
                 id: this.$route.params.id,
-                canAddComment: true
+                canAddComment: true,
+                title:''
             }
         },
         async asyncData({store, params}) {

@@ -22,6 +22,11 @@
 
 <script>
 export default {
+    head() {
+        return {
+            'title':`${process.env.appName} | Вход`
+        }
+    },
     layout:'empty',
      data(){
         return {

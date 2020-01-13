@@ -2,7 +2,7 @@
    <el-card shadow="hover" :body-style="{padding:0}" class="post">
        <header slot="header" class="post-header">
            <h3>{{post.title}}</h3>
-           <small class="el-icon-time">{{new Date(post.date).toLocaleString()}}</small>
+           <small class="el-icon-time">{{post.date|date('time')}}</small>
        </header>
        <div class="post-body">
            <img 

@@ -13,7 +13,7 @@
 
       <template slot-scope="{row: {date}}">
         <i class="el-icon-time"></i>
-        <span style="margin-left: 10px">{{ new Date(date).toLocaleString() }}</span>
+        <span style="margin-left: 10px">{{date|date('date')}}</span>
       </template>
     </el-table-column>
     <el-table-column label="Просмотры" width="180">
@@ -53,6 +53,11 @@
 
 <script>
   export default {
+    head() {
+        return {
+            'title':`${process.env.appName} | Все посты`
+        }
+    },
     layout:'admin',
     middleware: ['admin-auth'],
     async asyncData({store}) {
