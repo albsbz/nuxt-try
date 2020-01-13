@@ -8,13 +8,13 @@
     <el-form :model="controls" :rules="rules" ref="form" @submit.native.prevent="onSubmit">
     <!-- <h2>Войти в профиль</h2> -->
         <el-form-item label="Текст" prop="text">
-            <el-input type="textarea" v-model.trim="controls.text" resize="none" 
+            <el-input type="textarea" v-model="controls.text" resize="none" 
             :rows="10"/>
         </el-form-item>
         <div class="mb">
             <small class="mr">
                 <i class="el-icon-time"></i>
-                <span >{{ new Date(post.date).toLocaleString() }}</span>
+                <span >{{ post.date|date }}</span>
             </small>
              <small>
                 <i class="el-icon-view"></i>
@@ -40,9 +40,9 @@ export default {
         const post= await store.dispatch('post/fetchAdminById', params.id)
         return {post}
     },
-    head(){
-        return{
-        title: `Пост | ${this.post.title}`
+    head() {
+        return {
+            'title':`${process.env.appName} | Пост | ${this.post.title}`
         }
     },
     data(){

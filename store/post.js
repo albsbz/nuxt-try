@@ -1,27 +1,37 @@
-const posts= [
-    {title:'Post1', date:new Date(), views:22, comments: [1, 2], 
-_id: 'dsa', text: 'aaa'},
-    {title:'Post2', date:new Date(), views:22, comments: [1, 2], 
-    _id: 'ds2a', text: 'bbb'},
-]
+// import { getAnalytics } from "../api/controllers/post.controller"
+
 export const actions={
-    async fetchAdminPosts({}){
-        return await new Promise(resolve=>{
-            setTimeout(() => {
-                resolve(posts)
-            }, 2000);
-        })
+    async fetchAdminPosts({commit}){
+        try {
+            return await this.$axios.$get('/api/post/admin')
+        } catch (e) {
+            commit('setError', e, {root:true})
+            throw e
+        }
     },
-    async delete({}, id){
-       
-        return
+    async fetch({commit}){
+        try {
+            return await this.$axios.$get('/api/post')
+        } catch (e) {
+            commit('setError', e, {root:true})
+            throw e
+        }
     },
-    async update({}, {text, id}){
-        return await new Promise(resolve=>{
-            setTimeout(() => {
-                resolve(posts.find(p=>p._id===id).text=text)
-            }, 2000);
-        })
+    async delete({commit}, id){
+        try {
+            return await this.$axios.$delete(`/api/post/admin/${id}`)
+        } catch (e) {
+            commit('setError', e, {root:true})
+            throw e
+        }
+    },
+    async update({commit}, {text, id}){
+        try {
+            return await this.$axios.$put(`/api/post/admin/${id}`, {text})
+        } catch (e) {
+            commit('setError', e, {root:true})
+            throw e
+        }
     },
     async create({commit}, {title, text, image}){
         try {
@@ -29,21 +39,43 @@ export const actions={
             fd.append('title', title)
             fd.append('text', text)
             fd.append('image', image, image.name)
-            return await new Promise(resolve=>{
-                setTimeout(() => {
-                    resolve()
-                }, 2000);
-            })
+            return await this.$axios.$post('/api/post/admin', fd)
+            
         } catch (e){
             commit('setError', e, {root:true})
             throw e
         }
     },
-    async fetchAdminById({}, id){
-        return await new Promise(resolve=>{
-            setTimeout(() => {
-                resolve(posts.find(p=>p._id===id))
-            }, 2000);
-        })
+    async fetchAdminById({commit}, id){
+        try {
+            return await this.$axios.$get(`/api/post/admin/${id}`)
+        } catch (e) {
+            commit('setError', e, {root:true})
+            throw e
+        }
+    },
+    async fetchById({commit}, id){
+        try {
+            return await this.$axios.$get(`/api/post/${id}`)
+        } catch (e) {
+            commit('setError', e, {root:true})
+            throw e
+        }
+    },
+    async addView({commit}, {_id, views}){
+        try {
+            return await this.$axios.$put(`/api/post/add/view/${_id}`, {views})
+        } catch (e) {
+            commit('setError', e, {root:true})
+            throw e
+        }
+    },
+    async getAnalytics({commit}){
+        try {
+            return await this.$axios.$get('/api/post/admin/get/analytics')
+        } catch (e) {
+            commit('setError', e, {root:true})
+            throw e
+        }
     }
 }

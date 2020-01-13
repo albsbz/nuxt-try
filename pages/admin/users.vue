@@ -17,6 +17,11 @@
 
 <script>
 export default {
+    head() {
+        return {
+            'title':`${process.env.appName} | Создать пользователя`
+        }
+    },
     layout:'admin',
     middleware: ['admin-auth'],
     data(){

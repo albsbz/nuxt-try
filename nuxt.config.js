@@ -12,18 +12,28 @@ module.exports = {
       { hid: 'description', name: 'description', content: 'Nuxt.js project' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/icon.png' }
     ]
   },
   modules: [
     '@nuxtjs/axios',
-    
-    // Simple usage
-    'nuxt-express-module'
+    '@nuxtjs/pwa'
+  ],
+  pwa: {
+    workbox: {
+      /* workbox options */
+    },
+    meta: {
+      /* meta options */
+    }
+  },
+  serverMiddleware: [
+    '~/api/app.js',
   ],
 
   axios: {
     // proxyHeaders: false
+    baseURL: process.env.BASE_URL || 'http://localhost:3000'
   },
   /*
   ** Customize the progress bar color
@@ -48,8 +58,12 @@ module.exports = {
     }
   },
   plugins: [
-    { src: '@/plugins/globals'}
+    { src: '@/plugins/globals'},
+    { src: '@/plugins/axios'}
   ],
+  env:{
+    appName: 'BLOG'
+  },
   css:[
     '@/themes/mainTheme'
   ]

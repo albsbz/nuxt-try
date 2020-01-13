@@ -3,7 +3,7 @@
     <el-form :model="controls" :rules="rules" ref="form" @submit.native.prevent="onSubmit">
         <h1 class="mb">Создать новый пост</h1>
         <el-form-item label="Заголовок" prop="title">
-            <el-input v-model.trim="controls.title" />
+            <el-input v-model="controls.title" />
         </el-form-item>
         
         <el-form-item label="Текст" prop="text">
@@ -56,7 +56,7 @@ export default {
     middleware: ['admin-auth'],
     head(){
         return{
-        title: `Пост | Создать новый`
+       'title':`${process.env.appName} | Пост | Создать новый`
         }
     },
     data(){

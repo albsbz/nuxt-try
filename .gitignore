@@ -11,4 +11,8 @@ npm-debug.log
 dist
 
 # DB
-express/keys/keys.dev.js
+api/keys/keys.dev.js
+
+static
+
+sw.*
