@@ -7,6 +7,7 @@ const passportStrategy=require('./middleware/passport-strategy')
 const authRoutes=require('./routes/auth.routes')
 const postRoutes=require('./routes/post.routes')
 const commentRoutes=require('./routes/comment.routes')
+const feedbackRoutes=require('./routes/feedback.routes')
 const keys = require('./keys')
 const app = express()
 
@@ -27,5 +28,6 @@ app.use(bodyParser.json())
 app.use('/api/auth', authRoutes)
 app.use('/api/post', postRoutes)
 app.use('/api/comment', commentRoutes)
+app.use('/api/feedback', feedbackRoutes)
 
 module.exports = app
