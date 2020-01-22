@@ -13,6 +13,6 @@ dist
 # DB
 api/keys/keys.dev.js
 
-static
+
 
 sw.*
