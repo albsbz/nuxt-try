@@ -1,6 +1,6 @@
 <template>
    <nav>
-      <el-menu :default-active="activeIndex" class="el-menu" mode="horizontal" @select="handleSelect">
+      <el-menu :default-active="activeIndex" class="el-menu" mode="horizontal">
          <el-menu-item index="1">
             <nuxt-link to="/">Главная</nuxt-link>
          </el-menu-item>
