@@ -17,7 +17,11 @@ module.exports = {
   },
   modules: [
     '@nuxtjs/axios',
-    '@nuxtjs/pwa'
+    // '@nuxtjs/pwa',
+    ['nuxt-gmaps', {
+      key: 'AIzaSyA1vAShQtxMAjvIThqju94x-nJmUQO9EaE',
+      //you can use libraries: ['places']
+    }]
   ],
   pwa: {
     workbox: {

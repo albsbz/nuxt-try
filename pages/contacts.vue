@@ -6,8 +6,9 @@
         <el-col :xs="24" :sm="18" :md="12" :lg="10">   
           <h1 class="app-h1">Контакты</h1>
           <el-card :body-style="{ padding: '0px' }">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d8501.437318596923!2d35.135520251948435!3d47.84375884168317!3m2!1i1024!2i768!4f13.1!5e0!3m2!1suk!2sua!4v1541447194463" 
-              width="100%" height="300" frameborder="0" style="border:0" allowfullscreen></iframe>
+            <!-- <iframe src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d8501.437318596923!2d35.135520251948435!3d47.84375884168317!3m2!1i1024!2i768!4f13.1!5e0!3m2!1suk!2sua!4v1541447194463" 
+              width="100%" height="300" frameborder="0" style="border:0" allowfullscreen></iframe> -->
+            <app-map/>
             <div style="padding: 14px;">
               <span>Телефон: </span>
               <span>Адрес: </span>
@@ -35,9 +36,11 @@
 
 <script>
   import appContactForm from "~/components/main/contactForm"
+  import appMap from "~/components/main/map"
   export default {
     components: {
-      appContactForm
+      appContactForm,
+      appMap
     },
     data() {
       return {
