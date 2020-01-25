@@ -37,8 +37,7 @@
     data: function(){
       return {
         pageSize: 2,
-        currentPage: 1,
-        posts
+        currentPage: 1
       }
     },
     components:{
