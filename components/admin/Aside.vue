@@ -25,6 +25,11 @@
         <i class="el-icon-service"></i>
         <span>Пользователи</span>
       </el-menu-item>
+      
+      <el-menu-item index="/admin/users/create">
+        <i class="el-icon-service"></i>
+        <span>Создать пользователя</span>
+      </el-menu-item>
 
       <el-menu-item index="/admin/logout">
         <i class="el-icon-setting"></i>
