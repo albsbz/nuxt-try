@@ -29,21 +29,16 @@
 export default {
     data() {
     return {
-        currentLocation: {},
+        currentLocation: {
+            lat: 47.839152,
+            lng: 35.1375283 
+        },
         locations: [
             {
-                lat: 44.933076,
-                lng: 15.629058
-            },
-            {
-                lat: 45.815,
-                lng: "15.9819"
-            },
-            {
-                lat: "45.12",
-                lng: "16.21"
+                lat: 47.83,
+                lng: 35.13
             }
-        ],
+          ],
         pins: {
             selected: "data:image/png;base64,iVBORw0KGgo...",
             notSelected: "data:image/png;base64,iVBORw0KGgo..."

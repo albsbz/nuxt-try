@@ -17,9 +17,9 @@ module.exports = {
   },
   modules: [
     '@nuxtjs/axios',
-    // '@nuxtjs/pwa',
+    '@nuxtjs/pwa',
     ['nuxt-gmaps', {
-      key: 'AIzaSyA1vAShQtxMAjvIThqju94x-nJmUQO9EaE',
+      key: process.env.MAP_API_KEY ||'',
       //you can use libraries: ['places']
     }]
   ],
