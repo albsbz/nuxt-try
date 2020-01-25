@@ -34,7 +34,6 @@ module.exports = {
   serverMiddleware: [
     '~/api/app.js',
   ],
-
   axios: {
     // proxyHeaders: false
     baseURL: process.env.BASE_URL || 'http://localhost:3000'

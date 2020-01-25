@@ -6,6 +6,7 @@
         </div>
     </div>
 </template>
+
 <style lang="scss" scoped>
 .error-layout{
     display: flex;

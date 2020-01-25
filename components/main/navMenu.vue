@@ -1,13 +1,16 @@
 <template>
    <nav>
       <el-menu :default-active="activeIndex" class="el-menu" mode="horizontal">
-         <el-menu-item index="1">
+         <el-menu-item v-for="(item, k, i) in menu" :key="item.name" :index="i">
+            <nuxt-link :to="item.path">{{item.name}}</nuxt-link>
+         </el-menu-item>
+         <!-- <el-menu-item index="1">
             <nuxt-link to="/">Главная</nuxt-link>
          </el-menu-item>
         
          <el-menu-item index="2">
             <nuxt-link to="/contacts">Контакты</nuxt-link>
-         </el-menu-item>
+         </el-menu-item> -->
       </el-menu>
   </nav> 
 </template>
@@ -16,9 +19,18 @@
   export default {
     data() {
       return {
-        activeIndex: '1'
+        activeIndex: '1',
+        menu:[
+           {name:'Главная', path:'/'},
+           {name:'Контакты', path:'/contacts'},
+        ]
       };
     },
+   //  computed:{
+   //      activeIndex(){
+   //         return
+   //      }
+   //  },
     methods: {
       handleSelect(key, keyPath) {
         console.log(key, keyPath);

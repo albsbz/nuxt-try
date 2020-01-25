@@ -38,6 +38,7 @@
       return {
         pageSize: 2,
         currentPage: 1,
+        posts
       }
     },
     components:{
