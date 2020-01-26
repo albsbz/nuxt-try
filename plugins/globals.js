@@ -8,3 +8,4 @@ import DateFilter from '../common/date.filter'
 Vue.use(ElementUI, { locale })
 Vue.component('vueMarkdown', VueMarkdown)
 Vue.filter('date', DateFilter)
+

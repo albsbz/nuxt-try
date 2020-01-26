@@ -1,8 +1,11 @@
 <template>
      <el-form :model="controls" :rules="rules" ref="form" @submit.native.prevent="onSubmit">
         <h2>создать пользователя</h2>
-            <el-form-item label="Логин" prop="login">
-                <el-input v-model.trim="controls.login"/>
+            <el-form-item label="Имя" prop="name">
+                <el-input v-model.trim="controls.name"/>
+            </el-form-item>
+            <el-form-item label="Е-меил" prop="email">
+                <el-input v-model.trim="controls.email"/>
             </el-form-item>
             <div class="mb2"><el-form-item label="Пароль" prop="password">
                 <el-input v-model.trim="controls.password" resize="none" type="password"/>
@@ -27,12 +30,16 @@ export default {
     data(){
         return {
             controls:{
-                login:'',
+                name:'',
+                email:'',
                 password:''
             },
             rules: {
-                login: [
-                    { required: true, message: 'Введите логин', trigger: 'blur' }
+                name: [
+                    { required: true, message: 'Введите имя', trigger: 'blur' }
+                ],
+                email: [
+                    {type: 'email', required: true, message: 'Введите е-меил', trigger: 'blur' }
                 ],
                 password: [
                     { required: true, message: 'Введите пароль', trigger: 'blur' },
@@ -49,13 +56,15 @@ export default {
                 if (valid) {
                     this.loading=true;
                     const formData={
-                        login: this.controls.login,
+                        name: this.controls.name,
+                        email: this.controls.email,
                         password: this.controls.password,
                     }
                     try {
                         await this.$store.dispatch('auth/createUser', formData)
                         this.$message.success('пользователь создан')
-                        this.controls.login=''
+                        this.controls.email=''
+                        this.controls.name=''
                         this.controls.password=''
                         this.loading=false
                     } catch (error) {

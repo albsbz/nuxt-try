@@ -5,7 +5,12 @@
     <el-table-column
       label="Имя"
       width="180"
-      prop="login"
+      prop="name"
+      />
+    <el-table-column
+      label="Е-меил"
+      width="180"
+      prop="email"
       />
     <el-table-column
       label="Статус"

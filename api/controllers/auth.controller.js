@@ -2,14 +2,13 @@ const bcrypt = require('bcryptjs')
 const jwt= require('jsonwebtoken')
 const keys=require('../keys')
 const User= require('../models/user.model')
-
 module.exports.login=async (req, res)=>{
-    const user=await User.findOne({login: req.body.login})
+    const user=await User.findOne({email: req.body.email})
     if (user){
         const passCorrect=bcrypt.compareSync(req.body.password, user.password)
         if (passCorrect){
             const token=jwt.sign({
-                login:user.login,
+                email:user.email,
                 userId:user._id
             }, keys.JWT, {expiresIn:60*60})
             res.json({token})
@@ -23,13 +22,14 @@ module.exports.login=async (req, res)=>{
 }
 
 module.exports.createUser=async (req, res)=>{
-    let user=await User.findOne({login: req.body.login})
+    let user=await User.findOne({email: req.body.email})
     if (user){
-        res.status(409).json({message: 'Логин уже занят'})
+        res.status(409).json({message: 'Е-меил уже занят'})
     } else{
         const salt=bcrypt.genSaltSync(10)
         user=new User({
-            login:req.body.login,
+            name:req.body.name,
+            email:req.body.email,
             password:bcrypt.hashSync(req.body.password,salt)
         })
         await user.save()

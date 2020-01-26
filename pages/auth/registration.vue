@@ -3,18 +3,21 @@
         <el-col :xs="24" :sm="18" :md="12" :lg="10" >
             <el-form :model="controls" :rules="rules" ref="form" @submit.native.prevent="onSubmit">
                 <h2>Зарегистрироваться</h2>
-                    <el-form-item label="Логин" prop="login">
-                        <el-input v-model.trim="controls.login"/>
-                    </el-form-item>
-                    <div class="mb2"><el-form-item label="Пароль" prop="password">
-                        <el-input v-model.trim="controls.password" resize="none" type="password"/>
-                    </el-form-item></div>
-                    <el-form-item >
-                        <el-button type="primary" round native-type="submit" :loading="loading">
-                            Войти
-                        </el-button>
-                    </el-form-item>
-                </el-form>
+                <el-form-item label="Имя" prop="name">
+                    <el-input v-model.trim="controls.name"/>
+                </el-form-item>
+                <el-form-item label="Е-меил" prop="email">
+                    <el-input v-model.trim="controls.email"/>
+                </el-form-item>
+                <div class="mb2"><el-form-item label="Пароль" prop="password">
+                    <el-input v-model.trim="controls.password" resize="none" type="password"/>
+                </el-form-item></div>
+                <el-form-item >
+                    <el-button type="primary" round native-type="submit" :loading="loading">
+                        Создать
+                    </el-button>
+                </el-form-item>
+            </el-form>
         </el-col>
     </el-row>
 </template>
@@ -23,35 +26,30 @@
 export default {
     head() {
         return {
-            'title':`${process.env.appName} | Вход`
+            'title':`${process.env.appName} | Регистрация`
         }
     },
     layout:'default',
     data(){
         return {
             controls:{
-                login:'',
+                name:'',
+                email:'',
                 password:''
             },
             rules: {
-                login: [
-                    { required: true, message: 'Введите логин', trigger: 'blur' }
+                name: [
+                    { required: true, message: 'Введите имя', trigger: 'blur' }
+                ],
+                email: [
+                    {type: 'email', required: true, message: 'Введите е-меил', trigger: 'blur' }
                 ],
                 password: [
-                    { required: true, message: 'Введите пароль', trigger: 'blur' }
+                    { required: true, message: 'Введите пароль', trigger: 'blur' },
+                    {min: 6, message: 'Пароль должен быть не менее 6 символов', trigger: 'blur' }
                 ],
             },
             loading: false
-        }
-    },
-    mounted(){
-        const {message}=this.$route.query
-        if (message==='login'){
-            this.$message.info('Войдите в систему')
-        } else if (message==='logout'){
-            this.$message.info('Вы вышли из профиля')
-        } else if (message==='session'){
-            this.$message.warning('Время сессии истекло, зайдите заново')
         }
     },
      methods: {
@@ -61,18 +59,17 @@ export default {
                 if (valid) {
                     this.loading=true;
                     const formData={
-                        login: this.controls.login,
+                        name: this.controls.name,
+                        email: this.controls.email,
                         password: this.controls.password,
                     }
                     try {
-                       await this.$store.dispatch('auth/login', formData)
-                       .then(()=>{
-                            this.$message.success(`С возвращением, ${formData.login}!`)
-                            this.$router.push('/')
-                        })       
-                        .catch(()=>{
-                            this.controls.password=''
-                        })
+                        await this.$store.dispatch('auth/createUser', formData)
+                        this.$message.success('пользователь создан')
+                        this.controls.email=''
+                        this.controls.name=''
+                        this.controls.password=''
+                        this.loading=false
                     } catch (error) {
                         this.loading=false
                     }

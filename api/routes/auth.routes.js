@@ -6,6 +6,6 @@ const passport=require('passport')
 // /api/auth....
 router.post('/login', login)
 // router.post('/logout', logout)
-router.post('/admin/users/create', passport.authenticate('jwt', {session:false}), createUser)
+router.post('/admin/users/create', createUser)
 
 module.exports=router

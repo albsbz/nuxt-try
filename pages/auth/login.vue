@@ -3,8 +3,8 @@
         <el-col :xs="24" :sm="18" :md="12" :lg="10" >
             <el-form :model="controls" :rules="rules" ref="form" @submit.native.prevent="onSubmit">
                 <h2>Войти</h2>
-                    <el-form-item label="Логин" prop="login">
-                        <el-input v-model.trim="controls.login"/>
+                    <el-form-item label="Е-меил" prop="email">
+                        <el-input v-model.trim="controls.email"/>
                     </el-form-item>
                     <div class="mb2"><el-form-item label="Пароль" prop="password">
                         <el-input v-model.trim="controls.password" resize="none" type="password"/>
@@ -30,11 +30,11 @@ export default {
     data(){
         return {
             controls:{
-                login:'',
+                email:'',
                 password:''
             },
             rules: {
-                login: [
+                email: [
                     { required: true, message: 'Введите логин', trigger: 'blur' }
                 ],
                 password: [
@@ -52,7 +52,7 @@ export default {
             this.$message.info('Вы вышли из профиля')
         } else if (message==='session'){
             this.$message.warning('Время сессии истекло, зайдите заново')
-        }
+        } 
     },
      methods: {
         onSubmit(){
@@ -61,17 +61,18 @@ export default {
                 if (valid) {
                     this.loading=true;
                     const formData={
-                        login: this.controls.login,
+                        email: this.controls.email,
                         password: this.controls.password,
                     }
                     try {
                        await this.$store.dispatch('auth/login', formData)
                        .then(()=>{
-                            this.$message.success(`С возвращением, ${formData.login}!`)
+                            this.$message.success(`С возвращением, ${formData.name}!`)
                             this.$router.push('/')
                         })       
                         .catch(()=>{
                             this.controls.password=''
+                            this.$message.warning('Пользователь не найден')
                         })
                     } catch (error) {
                         this.loading=false
