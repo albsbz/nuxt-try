@@ -9,9 +9,15 @@ module.exports.login=async (req, res)=>{
         if (passCorrect){
             const token=jwt.sign({
                 email:user.email,
-                userId:user._id
+                userId:user._id,
+                role:user.isAdmin?'admin':'user'
             }, keys.JWT, {expiresIn:60*60})
-            res.json({token})
+            res.json({
+                token,
+                publicUserData:{
+                    name:user.name
+                }
+            })
         }
         else{
             res.status(404).json({message: 'Пользователь не найден'})

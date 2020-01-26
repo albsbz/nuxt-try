@@ -52,7 +52,7 @@
 
 export default {
     layout:'admin',
-    middleware: ['admin-auth'],
+    middleware: ['user-auth', 'is-admin-auth'],
     head(){
         return{
        'title':`${process.env.appName} | Пост | Создать новый`

@@ -67,7 +67,7 @@ export default {
                     try {
                        await this.$store.dispatch('auth/login', formData)
                        .then(()=>{
-                            this.$message.success(`С возвращением, ${formData.name}!`)
+                            this.$message.success(`С возвращением, ${this.$store.state.auth.currentUser.name}!`)
                             this.$router.push('/')
                         })       
                         .catch(()=>{

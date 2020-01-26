@@ -59,7 +59,7 @@
         }
     },
     layout:'admin',
-    middleware: ['admin-auth'],
+    middleware: ['user-auth', 'is-admin-auth'],
     async asyncData({store}) {
         const posts= await store.dispatch('post/fetchAdminPosts')
         return {posts}

@@ -26,7 +26,7 @@ export default {
         }
     },
     layout:'admin',
-    middleware: ['admin-auth'],
+    middleware: ['user-auth', 'is-admin-auth'],
     data(){
         return {
             controls:{

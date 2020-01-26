@@ -35,7 +35,7 @@
 <script>
 export default {
     layout:'admin',
-    middleware: ['admin-auth'],
+    middleware: ['user-auth', 'is-admin-auth'],
     async asyncData({store, params}){
         const post= await store.dispatch('post/fetchAdminById', params.id)
         return {post}

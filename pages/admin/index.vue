@@ -23,7 +23,7 @@ export default {
         }
     },
     layout:'admin',
-    middleware: ['admin-auth'],
+    middleware: ['user-auth', 'is-admin-auth'],
     components: {appGraph},
     async asyncData ({store}){ 
         const analytData= await store.dispatch('post/getAnalytics')
