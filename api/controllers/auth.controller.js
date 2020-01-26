@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs')
 const jwt= require('jsonwebtoken')
 const keys=require('../keys')
 const User= require('../models/user.model')
+
 module.exports.login=async (req, res)=>{
     const user=await User.findOne({login: req.body.login})
     if (user){

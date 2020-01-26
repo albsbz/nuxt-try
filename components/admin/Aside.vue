@@ -31,7 +31,7 @@
         <span>Создать пользователя</span>
       </el-menu-item>
 
-      <el-menu-item index="/admin/logout">
+      <el-menu-item index="/auth/logout">
         <i class="el-icon-setting"></i>
         <span>Выйти</span>
       </el-menu-item>

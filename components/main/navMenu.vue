@@ -20,6 +20,9 @@
         menu:[
            {name:'Главная', path:'/'},
            {name:'Контакты', path:'/contacts'},
+           {name:'Войти', path:'/auth/login'},
+           {name:'Выйти', path:'/auth/logout'},
+           {name:'Регистрация', path:'/auth/registration'},
         ]
       };
     },

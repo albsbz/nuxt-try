@@ -1,8 +1,12 @@
 const {model, Schema}=require('mongoose')
 const userSchema=new Schema({
-    login: {
+    email: {
         type: String,
         unique: true,
+        required:true
+    },
+    name: {
+        type: String,
         required:true
     },
     password: {
