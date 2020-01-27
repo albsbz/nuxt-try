@@ -16,15 +16,19 @@
   export default {
     data() {
       return {
-        activeLink: '1',
-        menu:[
-           {name:'Главная', path:'/'},
-           {name:'Контакты', path:'/contacts'},
-           {name:'Войти', path:'/auth/login'},
-           {name:'Выйти', path:'/auth/logout'},
-           {name:'Регистрация', path:'/auth/registration'},
-        ]
-      };
+        activeLink: '1'
+      }
+    },
+    computed:{
+        menu(){
+          return [
+            {name:'Главная', path:'/'},
+            {name:'Контакты', path:'/contacts'},
+            !this.$store.getters['auth/isAuth']?{name:'Войти', path:'/auth/login'}:{name:'Выйти', path:'/auth/logout'},
+            !this.$store.getters['auth/isAuth']?{name:'Регистрация', path:'/auth/registration'}:{},
+            this.$store.getters['auth/isAdmin']?{name:'Админпанель', path:'/admin'}:{},
+          ]
+        }
     },
     methods: {
       handleSelect(key, keyPath) {
