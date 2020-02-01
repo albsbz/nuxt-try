@@ -5,7 +5,7 @@
         <el-form-item label="Заголовок" prop="title">
             <el-input v-model="controls.title" />
         </el-form-item>
-        
+         
         <el-form-item label="Текст" prop="text">
             <el-input type="textarea" v-model="controls.text" resize="none" 
             :rows="10"/>

@@ -69,5 +69,5 @@ module.exports = {
   },
   css:[
     '@/themes/mainTheme'
-  ]
+  ],
 }

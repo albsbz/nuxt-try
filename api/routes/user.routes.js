@@ -2,6 +2,7 @@ const passport=require('passport')
 const {Router}=require('express')
 const router=Router()
 const ctr=require('../controllers/user.controller')
+const check=require('../middleware/check')
 
 // // /api/user
 //Admin
@@ -14,8 +15,10 @@ const ctr=require('../controllers/user.controller')
 router.get(
     '/admin/',
     passport.authenticate('jwt', {session:false}),
+    check.adminRole,
     ctr.getAll
 )
+
 // router.get(
 //     '/admin/get/analytics',
 //     passport.authenticate('jwt', {session:false}),
@@ -34,11 +37,13 @@ router.get(
 router.delete(
     '/admin/:id',
     passport.authenticate('jwt', {session:false}),
+    check.adminRole,
     ctr.remove
 ),
 router.put(
     '/admin/toggle-status/:id',
     passport.authenticate('jwt', {session:false}),
+    check.adminRole,
     ctr.toggleStatus
 )
 

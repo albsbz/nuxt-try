@@ -73,6 +73,7 @@ export default {
                         .catch(()=>{
                             this.controls.password=''
                             this.$message.warning('Пользователь не найден')
+                            this.loading=false
                         })
                     } catch (error) {
                         this.loading=false

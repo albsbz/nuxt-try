@@ -2,6 +2,8 @@ const bcrypt = require('bcryptjs')
 const jwt= require('jsonwebtoken')
 const keys=require('../keys')
 const User= require('../models/user.model')
+const mailer = require("../mail/default")
+
 module.exports.login=async (req, res)=>{
     const user=await User.findOne({email: req.body.email})
     if (user){
@@ -33,12 +35,15 @@ module.exports.createUser=async (req, res)=>{
         res.status(409).json({message: 'Е-меил уже занят'})
     } else{
         const salt=bcrypt.genSaltSync(10)
+        // const token=Math.random().toString(36).substring(7);
         user=new User({
             name:req.body.name,
             email:req.body.email,
-            password:bcrypt.hashSync(req.body.password,salt)
+            password:bcrypt.hashSync(req.body.password,salt),
+            // token
         })
         await user.save()
-        res.status(201).json(user)
+        // mailInfo=await mailer.sendToken(token)
+        res.status(201).json(user, mailInfo)
     }
 }

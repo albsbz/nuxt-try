@@ -77,7 +77,7 @@ export const actions={
     autoLogin({dispatch, commit}){
         const cookieStr = process.client
       ? document.cookie
-      : this.app.context.req.headers.cookie
+      : (this.app.context.req.headers.cookie? this.app.context.req.headers.cookie: '')
 
       const cookies = Cookie.parse(cookieStr || '') || {}
       const token = cookies['jwt-token']
