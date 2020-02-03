@@ -58,6 +58,7 @@ router.get(
 )
 router.put(
     '/update/:id',
+    passport.authenticate('jwt', {session:false}),
     ctr.update
 )
 
