@@ -44,6 +44,6 @@ module.exports.createUser=async (req, res)=>{
         })
         await user.save()
         // mailInfo=await mailer.sendToken(token)
-        res.status(201).json(user, mailInfo)
+        res.status(201).json(user)
     }
 }

@@ -1,97 +1,120 @@
 <template>
   <div>
-      
       <el-row type="flex" justify="center">
-        
         <el-col :xs="24" :sm="18" :md="12" :lg="10">   
-          <h1 class="app-h1">Контакты</h1>
-          <el-card :body-style="{ padding: '0px' }">
-            <!-- <iframe src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d8501.437318596923!2d35.135520251948435!3d47.84375884168317!3m2!1i1024!2i768!4f13.1!5e0!3m2!1suk!2sua!4v1541447194463" 
-              width="100%" height="300" frameborder="0" style="border:0" allowfullscreen></iframe> -->
-            <app-map/>
-            <div style="padding: 14px;">
-              <span>Телефон: </span>
-              <span>Адрес: </span>
-              <div class="bottom clearfix">
-                <el-button 
-                  @click="formVisible=true" type="success" round icon="el-icon-message" class="button">
-                  Обратная связь
-                </el-button>
-              </div>
-            </div>
-          </el-card>
+          <h1 class="app-h1">Профиль</h1>
+            <el-form :model="controls" :rules="rules" ref="form" @submit.native.prevent="onSubmit">
+              <el-card class="box-card">
+                <div slot="header" class="box-header">
+                  <el-avatar :size="50" :src="circleUrl"></el-avatar>
+                  <div class="text"> 
+                    <h5>Имя: 
+                      <span class="pointer" v-if="!showFormItem1" @click="showFormItem1=!showFormItem1">
+                        {{controls.name}}
+                      </span>
+                    </h5>
+                    <el-form-item prop="name" v-if="showFormItem1" @click="showFormItem1=!showFormItem1">
+                      <el-input v-model="controls.name"/>
+                    </el-form-item>
+                  </div>
+                  
+                  <el-button style="float: right; padding: 3px 0" type="text" class="button" native-type="submit">
+                    Сохранить измененмя
+                  </el-button>
+                </div>
+                <h5>Описание: </h5>
+                <div v-if="!showFormItem2" @click="showFormItem2=!showFormItem2" class="pointer">
+                  {{controls.description||'Нет описания'}}
+                </div>
+                <el-form-item prop="description" v-if="showFormItem2" @click="showFormItem2=!showFormItem2">
+                  <el-input v-model="controls.description" type="textarea" resize="none" :rows="2"/>
+                </el-form-item>
+              </el-card>
+            </el-form>
         </el-col>
       </el-row>
 
-      <el-dialog title="Обратная связь" :visible.sync="formVisible">
-        <app-contact-form :confirm="confirm" @created="closeDialog" @nonValid="confirm=false"/>
-        <span slot="footer" class="dialog-footer">
-          <el-button type="primary" @click.prevent="confirmClick">Confirm</el-button>
-        </span>
-      </el-dialog>
+    
   </div>
 </template>
 
 
 
 <script>
-  import appContactForm from "~/components/main/contactForm"
-  import appMap from "~/components/main/map"
+  
   export default {
     components: {
-      appContactForm,
-      appMap
+      
     },
     data() {
       return {
-        confirm: false,
-        formVisible: false
+        circleUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
+        formLabelWidth: '120px',
+        showFormItem1:false,
+        showFormItem2:false,
+        controls:{
+            name:'',
+            description:''
+        },
+        rules: {
+            name: [
+                { required: true, message: 'Имя не должно быть пустым', trigger: 'blur' }
+            ],
+            description: [
+                { required: true, message: 'Введите описание', trigger: 'blur' }
+            ],
+        },
+        loading: false,
       };
     },
+    async asyncData({store}) {
+        const user = await store.dispatch('user/fetchCurrentUser') 
+        return {user}
+    },
+    mounted(){
+      this.controls.name=this.user.name,
+      this.controls.description=this.user.description
+    },
     methods:{
-      confirmClick(){
-        this.confirm=true
-      },
-      closeDialog(){
-        this.formVisible = false
-        this.confirm=false
-      }
+        onSubmit(){     
+          this.$refs['form'].validate(async (valid) => {
+            if (valid) {
+              this.loading=true
+              const formData={
+                  name: this.controls.name,
+                  description: this.controls.description
+              }
+              try {
+                  
+                  await this.$store.dispatch('user/updateCurrentUser', formData)
+                  this.$message.success('Данные профиля изменены')
+                  this.$router.push('/')
+              } catch (error) {
+                  this.loading=false
+              }
+            } 
+          });
+        }
     }
   };
 </script>
 
-<style>
-  .time {
-    font-size: 13px;
-    color: #999;
-  }
-  
-  .bottom {
-    margin-top: 13px;
-    line-height: 12px;
-  }
+<style lang="scss" scoped>
+.box-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.box-header button{
+  align-self: flex-start
+}
+.box-header .text{
+  flex-grow: 2;
+  padding: 5px
+}
+.pointer{
+   cursor: pointer;
+}
 
-  .button {
-    padding: 0;
-    float: left;
-  }
 
-  .image {
-    width: 100%;
-    display: block;
-  }
-
-  .clearfix:before,
-  .clearfix:after {
-      display: table;
-      content: "";
-  }
-  
-  .clearfix:after {
-      clear: both
-  }
-
-  .app-h1 {
-    text-align: center;
-  }
 </style>

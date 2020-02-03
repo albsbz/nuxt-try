@@ -9,6 +9,11 @@ const userSchema=new Schema({
         type: String,
         required:true,
     },
+    description: {
+        type: String,
+        default:'',
+        maxlength:256
+    },
     // token:{
     //     type: String,
     //     required:true,

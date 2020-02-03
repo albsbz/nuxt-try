@@ -60,8 +60,11 @@
     },
     created () {
       this.activeLink =this.menu.find((o,i)=>{
-        if (o.path===this.$route.path){return this.menu[i]}
-      }).index
+        if (o.path===this.$route.path){
+          return this.menu[i]
+        }
+      })
+      this.activeLink=this.activeLink?this.activeLink.index : ''
        
       // this.activeLink = this.$route.path
     },

@@ -52,14 +52,14 @@ router.put(
 //     '/',
 //     ctr.getAll
 // )
-// router.get(
-//     '/:id',
-//     ctr.getById
-// )
-// router.put(
-//     '/add/view/:id',
-//     ctr.addView
-// )
+router.get(
+    '/:id',
+    ctr.getById
+)
+router.put(
+    '/update/:id',
+    ctr.update
+)
 
 
 // const {login, createUser}=require('../controllers/auth.controller')

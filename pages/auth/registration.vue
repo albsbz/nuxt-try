@@ -70,6 +70,8 @@ export default {
                         this.controls.name=''
                         this.controls.password=''
                         this.loading=false
+                        await this.$store.dispatch('auth/login', formData)
+                        this.$router.push('/')
                     } catch (error) {
                         this.loading=false
                     }

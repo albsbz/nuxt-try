@@ -9,14 +9,14 @@ export const actions={
             throw e
         }
     },
-    async fetch({commit}){
-        // try {
-        //     return await this.$axios.$get('/api/post')
-        // } catch (e) {
-        //     commit('setError', e, {root:true})
-        //     throw e
-        // }
-    },
+    // async fetch({commit}){
+    //     try {
+    //         return await this.$axios.$get('/api/user')
+    //     } catch (e) {
+    //         commit('setError', e, {root:true})
+    //         throw e
+    //     }
+    // },
     async delete({commit}, id){
         try {
             return await this.$axios.$delete(`/api/user/admin/${id}`)
@@ -62,12 +62,31 @@ export const actions={
         //     throw e
         // }
     },
-    async fetchById({commit}, id){
-        // try {
-        //     return await this.$axios.$get(`/api/post/${id}`)
-        // } catch (e) {
-        //     commit('setError', e, {root:true})
-        //     throw e
-        // }
+    // async fetchById({commit}, id){
+    //     try {
+    //         return await this.$axios.$get(`/api/user/${id}`)
+    //     } catch (e) {
+    //         commit('setError', e, {root:true})
+    //         throw e
+    //     }
+    // },
+    async fetchCurrentUser({commit, rootState}){
+        try {
+            return await this.$axios.$get(`/api/user/${rootState.auth.currentUser.id}`)
+        } catch (e) {
+            commit('setError', e, {root:true})
+            throw e
+        }
+    },
+    async updateCurrentUser({commit, rootState}, formData){
+        try {
+            console.log(1)
+            const res=await this.$axios.$put(`/api/user/update/${rootState.auth.currentUser.id}`, {formData})
+            commit('auth/setCurrentUserName', formData.name, {root:true})
+            return res
+        } catch (e) {
+            commit('setError', e, {root:true})
+            throw e
+        }
     }
 }

@@ -97,4 +97,4 @@ export default {
 .mr{
     margin-right: 2rem;
 }
-</style>template   
+</style>   

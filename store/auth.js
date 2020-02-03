@@ -18,11 +18,14 @@ export const mutations={
  setAdmin(state){
     state.isAdmin=true
  },
- setNoAdmin(state){
-  state.isAdmin=false
-},
+  setNoAdmin(state){
+    state.isAdmin=false
+  },
   setCurrentUser(state, user){
     state.currentUser=user
+  },
+  setCurrentUserName(state, name){
+    state.currentUser.name=name
   },
   deleteCurrentUser(state){
     state.currentUser=''
@@ -31,7 +34,7 @@ export const mutations={
 
 export const actions={
    
-    async login({commit, dispatch}, formData){
+    async login({commit, dispatch, state}, formData){
             // const token=await new Promise((resolve, reject)=>{
             //     setTimeout(()=>resolve('mock-token'), 2000)
             // })
@@ -44,7 +47,8 @@ export const actions={
                 }else if (role==="user"){
                   commit('setNoAdmin')
                 }
-                commit('setCurrentUser', publicUserData)
+                // {id: jwtDecode(state.token)._id}
+                commit('setCurrentUser', Object.assign(publicUserData, {id:jwtDecode(state.token).userId}))
                 Cookies.set('user-data', JSON.stringify(publicUserData))
               })
               .catch(function (e) {
@@ -91,7 +95,7 @@ export const actions={
         }else if (role==="user"){
           commit('setNoAdmin')
         }
-        commit('setCurrentUser', publicUserData)
+        commit('setCurrentUser', Object.assign(publicUserData, {id:jwtDecode(token).userId}))
       } else {
         dispatch('logout')
       }
