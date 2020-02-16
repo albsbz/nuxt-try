@@ -29,6 +29,7 @@ module.exports.getById=async (req, res)=>{
         const user=await User.findById(req.params.id)
             .select('description')
             .select('name')
+            .select('avatar')
             .exec((e, user)=>{
                 res.json(user)
             }
@@ -39,9 +40,17 @@ module.exports.getById=async (req, res)=>{
 }
 module.exports.update=async (req, res)=>{
     try {
-        const $set={
-            name: req.body.formData.name,
-            description: req.body.formData.description,
+        // console.log(req)
+        let $set={
+            name: req.body.name,
+            description: req.body.description,
+        }
+        if(req.file) {
+            $set={
+                ...$set, 
+                avatar: `/${req.file.filename}`    
+                // avatar: `/${req.file.filename}`req.body.formData.avatar           
+            }
         }
         const user= await User.findOneAndUpdate({
            _id: req.params.id,

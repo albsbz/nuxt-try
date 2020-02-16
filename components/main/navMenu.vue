@@ -1,5 +1,12 @@
 <template>
    <nav>
+      <div class="avatarWraper" v-if="$store.getters['auth/isAuth']">
+        <el-avatar 
+          class="avatar"
+          :size="50" 
+          :src="$store.getters['auth/avatar']"
+        />
+      </div>
       <el-menu :default-active="activeLink" :router="true" class="el-menu" mode="horizontal">
          <template 
             v-for="menuItem in menu"
@@ -65,14 +72,7 @@
         }
       })
       this.activeLink=this.activeLink?this.activeLink.index : ''
-       
-      // this.activeLink = this.$route.path
     },
-    // watch: {
-    //   $route (newVal, oldVal) {
-    //     this.activeLink = newVal.path
-    //   }
-    // }
   }
 </script>
 
@@ -81,14 +81,24 @@
    nav {
     display: flex;
     align-items:center;
+    height:100%;
+    border-bottom: 1px solid #e6e6e6;
+
+   }
+   .el-menu{ 
+     width: 100%;
+     display: flex;
+    align-items:flex-start;
     justify-content:center;
     height:100%;
     border-bottom: 1px solid #e6e6e6;
-   }
-   .el-menu{ 
+
       a {
          text-decoration: none;
       }
+   }
+   .avatarWraper{
+     flex-basis: 50px;
 
    }
  

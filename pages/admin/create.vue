@@ -11,12 +11,12 @@
             :rows="10"/>
         </el-form-item>
         <el-upload
-        class="mb"
-        drag
-        action="https://jsonplaceholder.typicode.com/posts/"
-        :on-change="handleImageChange"
-        :auto-upload="false"
-        ref="upload"
+            class="mb"
+            drag
+            action=""
+            :on-change="handleImageChange"
+            :auto-upload="false"
+            ref="upload"
         >
         <i class="el-icon-upload"></i>
         <div class="el-upload__text">Перетащите картинку<em>Нажмите для загрузки</em></div>

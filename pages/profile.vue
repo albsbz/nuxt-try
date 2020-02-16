@@ -6,7 +6,16 @@
             <el-form :model="controls" :rules="rules" ref="form" @submit.native.prevent="onSubmit">
               <el-card class="box-card">
                 <div slot="header" class="box-header">
-                  <el-avatar :size="50" :src="circleUrl"></el-avatar>
+                  
+                  <el-upload
+                    class="avatar-uploader"
+                    action=""
+                    :show-file-list="false"
+                    :on-success="handleAvatarSuccess"
+                    :before-upload="beforeAvatarUpload">
+                    <img :src="avatarUrl" class="avatar">
+                  </el-upload>
+
                   <div class="text"> 
                     <h5>Имя: 
                       <span class="pointer" v-if="!showFormItem1" @click="showFormItem1=!showFormItem1">
@@ -48,13 +57,14 @@
     },
     data() {
       return {
-        circleUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
+        avatarUrl: this.$store.getters['auth/avatar'],
+        avatar:'',
         formLabelWidth: '120px',
         showFormItem1:false,
         showFormItem2:false,
         controls:{
-            name:'',
-            description:''
+            name:this.$store.getters['auth/currentUser'].name,
+            description:this.$store.getters['auth/currentUser'].description
         },
         rules: {
             name: [
@@ -67,34 +77,54 @@
         loading: false,
       };
     },
-    async asyncData({store}) {
-        const user = await store.dispatch('user/fetchCurrentUser') 
-        return {user}
-    },
+    // async asyncData({store}) {
+    //     const user = await store.dispatch('user/fetchCurrentUser') 
+    //     return {user}
+    // },
     mounted(){
-      this.controls.name=this.user.name,
-      this.controls.description=this.user.description
+      // this.controls.name=this.$store.getters['auth/currentUser'].name;
+      // this.controls.description=this.$store.getters['auth/currentUser'].description;
+
     },
     methods:{
-        onSubmit(){     
-          this.$refs['form'].validate(async (valid) => {
-            if (valid) {
-              this.loading=true
-              const formData={
-                  name: this.controls.name,
-                  description: this.controls.description
-              }
-              try {
-                  
-                  await this.$store.dispatch('user/updateCurrentUser', formData)
-                  this.$message.success('Данные профиля изменены')
-                  this.$router.push('/')
-              } catch (error) {
-                  this.loading=false
-              }
-            } 
-          });
+      onSubmit(){     
+        this.$refs['form'].validate(async (valid) => {
+          if (valid) {
+            this.loading=true
+            const formData={
+                name: this.controls.name,
+                description: this.controls.description,
+                avatar: this.avatar,
+                avatarUrl:this.avatarUrl
+            }
+            try {
+                
+                await this.$store.dispatch('user/updateCurrentUser', formData)
+                this.$message.success('Данные профиля изменены')
+                this.$router.push('/')
+            } catch (error) {
+                this.loading=false
+            }
+          } 
+        });
+      },
+      handleAvatarSuccess(res, file, filelist) {
+        this.avatarUrl = URL.createObjectURL(file.raw);
+        this.avatar=file.raw;
+
+      },
+      beforeAvatarUpload(file) {
+        const isJPG = file.type === ('image/jpeg')||('image/png');
+        const isLt2M = file.size / 1024 / 1024 < 2;
+
+        if (!isJPG) {
+          this.$message.error('Avatar picture must be JPG or PNG format!');
         }
+        if (!isLt2M) {
+          this.$message.error('Avatar picture size can not exceed 2MB!');
+        }
+        return isJPG && isLt2M;
+      }
     }
   };
 </script>
@@ -115,6 +145,29 @@
 .pointer{
    cursor: pointer;
 }
+.avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
 
 
 </style>

@@ -3,6 +3,7 @@ const {Router}=require('express')
 const router=Router()
 const ctr=require('../controllers/user.controller')
 const check=require('../middleware/check')
+const upload=require('../middleware/upload')
 
 // // /api/user
 //Admin
@@ -59,6 +60,7 @@ router.get(
 router.put(
     '/update/:id',
     passport.authenticate('jwt', {session:false}),
+    upload.single('avatar'),
     ctr.update
 )
 

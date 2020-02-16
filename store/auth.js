@@ -21,11 +21,20 @@ export const mutations={
   setNoAdmin(state){
     state.isAdmin=false
   },
+   setAdmin(state){
+    state.isAdmin=true
+ },
   setCurrentUser(state, user){
     state.currentUser=user
   },
   setCurrentUserName(state, name){
     state.currentUser.name=name
+  },
+  setCurrentUserDescription(state, description){
+    state.currentUser.description=description
+  },
+  setCurrentUserAvatar(state, avatar){
+    state.currentUser.avatar=avatar
   },
   deleteCurrentUser(state){
     state.currentUser=''
@@ -48,6 +57,7 @@ export const actions={
                   commit('setNoAdmin')
                 }
                 // {id: jwtDecode(state.token)._id}
+                console.log(publicUserData)
                 commit('setCurrentUser', Object.assign(publicUserData, {id:jwtDecode(state.token).userId}))
                 Cookies.set('user-data', JSON.stringify(publicUserData))
               })
@@ -106,7 +116,9 @@ export const actions={
 export const getters={
     isAuth: state=>Boolean(state.token),
     isAdmin: state=>state.isAdmin,
-    token: state=>state.token
+    token: state=>state.token,
+    avatar: state=>state.currentUser.avatar?state.currentUser.avatar:'/noavatar.png',
+    currentUser: state=>state.currentUser,
 }
 
 function isJWTValid(token) {

@@ -5,6 +5,7 @@ const User= require('../models/user.model')
 const mailer = require("../mail/default")
 
 module.exports.login=async (req, res)=>{
+
     const user=await User.findOne({email: req.body.email})
     if (user){
         const passCorrect=bcrypt.compareSync(req.body.password, user.password)
@@ -17,7 +18,9 @@ module.exports.login=async (req, res)=>{
             res.json({
                 token,
                 publicUserData:{
-                    name:user.name
+                    name:user.name,
+                    avatar:user.avatar,
+                    description:user.description
                 }
             })
         }
