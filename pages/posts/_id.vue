@@ -48,7 +48,6 @@
         data(){
             return {
                 id: this.$route.params.id,
-                canAddComment: true,
                 title:''
             }
         },
@@ -64,7 +63,12 @@
         methods:{
             createCommentHandler({newComment}){
                 this.post.comments.unshift(newComment)
-                this.canAddComment=false
+
+            }
+        },
+        computed:{
+            canAddComment(){
+               return this.$store.getters['auth/isAuth']
             }
         }
     }

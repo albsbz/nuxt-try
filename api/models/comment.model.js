@@ -1,9 +1,9 @@
 const {model, Schema}=require('mongoose')
 const commentSchema=new Schema({
-    name: {
-        type: String,
-        required:true
-    },
+    // name: {
+    //     type: String,
+    //     required:true
+    // },
     text: {
         type: String,
         required:true
@@ -14,6 +14,10 @@ const commentSchema=new Schema({
     },
     postId: {
         ref: 'posts',
+        type: Schema.Types.ObjectId,
+    },
+    author: {
+        ref: 'users',
         type: Schema.Types.ObjectId,
     },
    

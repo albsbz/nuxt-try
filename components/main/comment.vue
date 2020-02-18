@@ -1,7 +1,12 @@
 <template>
     <el-card class="comment">
         <div class="comment-header">
-            <span class="person-name">{{comment.name}}</span>
+            <el-avatar 
+                class="avatar"
+                :size="50" 
+                :src="comment.author.avatar"
+            />
+            <span class="person-name">{{comment.author.name}}</span>
             <span><small class="el-icon-time">{{comment.date|date}}</small></span>
         </div>
         <small class="comment-text">{{comment.text}}</small>

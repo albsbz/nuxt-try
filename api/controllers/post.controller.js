@@ -26,7 +26,13 @@ module.exports.getAll=async (req, res)=>{
 
 module.exports.getById=async (req, res)=>{
     try {
-        await Post.findById(req.params.id).populate('comments').exec((e, post)=>{
+        // await Post.findById(req.params.id).populate('comments').exec((e, post)=>{
+        //     res.json(post)
+        // })
+        await Post.findById(req.params.id).populate({
+            path: 'comments',
+            populate: { path: 'author' } 
+        }).exec((e, post)=>{
             res.json(post)
         })
     } catch (e) {

@@ -1,9 +1,6 @@
 <template>
     <el-form :model="controls" :rules="rules" ref="form" @submit.native.prevent="onSubmit">
        <h2>Добавить коментарий</h2>
-        <el-form-item label="Имя" prop="name">
-            <el-input v-model="controls.name"/>
-        </el-form-item>
         <el-form-item label="Текст" prop="text">
             <el-input v-model="controls.text" type="textarea" resize="none" :rows="2"/>
         </el-form-item>
@@ -26,13 +23,9 @@ export default {
     data(){
         return {
             controls:{
-                name:'',
                 text:''
             },
             rules: {
-                name: [
-                    { required: true, message: 'Имя не должно быть пустым', trigger: 'blur' }
-                ],
                 text: [
                     { required: true, message: 'Введите сообщение', trigger: 'blur' }
                 ],
@@ -47,14 +40,15 @@ export default {
                 if (valid) {
                     this.loading=true;
                     const formData={
-                        name: this.controls.name,
                         text: this.controls.text,
-                        postId: this.postId
+                        postId: this.postId,
+                        author: this.$store.getters['auth/currentUser'].id
                     }
                     try {
                        const newComment= await this.$store.dispatch('comment/create', formData)
                         this.$message.success('Ваш коментарий добавлен')
                         this.$emit('created', {newComment})
+                        this.loading=false
                     } catch (error) {
                         this.loading=false
                     }
